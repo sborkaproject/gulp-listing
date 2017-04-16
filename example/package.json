@@ -1,0 +1,30 @@
+{
+    "name": "gulp-listing-example",
+    "nameVerbose": "Example project",
+    "version": "0.0.1",
+    "description": "Example",
+    "scripts": {
+        "start": "gulp",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sborkaproject/gulp-listing.git"
+    },
+    "keywords": [
+        "gulp",
+        "listing"
+    ],
+    "author": "hello@sborkaproject.com",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sborkaproject/gulp-listing/issues"
+    },
+    "homepage": "https://github.com/sborkaproject/gulp-listing#readme",
+    "dependencies": {
+        "browser-sync": "^2.18.8",
+        "gulp": "^3.9.1",
+        "gulp-listing": "https://github.com/sborkaproject/gulp-listing.git",
+        "moment": "^2.18.1"
+    }
+}
