@@ -24,6 +24,7 @@ module.exports = function (file, opt) {
     var latestFile;
     var latestMod = '';
     var fileSize = '';
+    var tableHead ='';
     var contents = '';
     var linkName = '';
     var head;
@@ -34,7 +35,7 @@ module.exports = function (file, opt) {
             console.error("There was an error reading the package.json file");
             return;
         }
-        contents += '<h1 class="title">' + data.nameVerbose + ' demo</h1>'
+        tableHead = '<h1 class="title">' + data.nameVerbose + ' demo</h1>'
             + '<table class="table">'
             + '<tr class="table__row">'
             + '<th class="table__head">name</th>'
@@ -67,7 +68,7 @@ module.exports = function (file, opt) {
         if (file.stat) {
             latestFile = file;
             fileSize = file.stat.size;
-            console.log(file.path, file.stat.mtime);
+            // console.log(file.path, file.stat.mtime);
             latestMod = moment(file.stat.mtime).format('MMM Do YYYY, HH:mm');
         }
 
@@ -97,11 +98,10 @@ module.exports = function (file, opt) {
         } else {
             joinedFile = new File(file);
         }
-        // console.log(__dirname);
         head = fs.readFileSync(path.resolve(__dirname, 'head.html'));
         footer = fs.readFileSync(path.resolve(__dirname, 'footer.html'));
 
-        contents = head.toString() + contents + footer.toString();
+        contents = head.toString() + tableHead + contents + footer.toString();
 
         joinedFile.contents = new Buffer(contents);
 
