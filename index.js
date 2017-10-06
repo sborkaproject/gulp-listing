@@ -30,20 +30,6 @@ module.exports = function (file, opt) {
     var head;
     var footer;
 
-    readJson(process.cwd() + '/package.json', console.error, false, function (er, data) {
-        if (er) {
-            console.error("There was an error reading the package.json file");
-            return;
-        }
-        tableHead = '<h1 class="title">' + data.nameVerbose + ' demo</h1>'
-            + '<table class="table">'
-            + '<tr class="table__row">'
-            + '<th class="table__head">name</th>'
-            + '<th class="table__head">last modified</th>'
-            + '<th class="table__head">size</th>'
-            + '</tr>';
-    });
-
     if (typeof file === 'string') {
         fileName = file;
     } else if (typeof  file.path === 'string') {
@@ -101,13 +87,29 @@ module.exports = function (file, opt) {
         head = fs.readFileSync(path.resolve(__dirname, 'head.html'));
         footer = fs.readFileSync(path.resolve(__dirname, 'footer.html'));
 
-        contents = head.toString() + tableHead + contents + footer.toString();
+        var self = this;
+        readJson(process.cwd() + '/package.json', console.error, false, function(er, data) {
+            if (er) {
+                console.error("There was an error reading the package.json file");
+                return;
+            }
+            tableHead = '<h1 class="title">' + data.nameVerbose + ' demo</h1>'
+                + '<table class="table">'
+                + '<tr class="table__row">'
+                + '<th class="table__head">name</th>'
+                + '<th class="table__head">last modified</th>'
+                + '<th class="table__head">size</th>'
+                + '</tr>';
 
-        joinedFile.contents = new Buffer(contents);
+            contents = head.toString() + tableHead + contents + footer.toString();
 
-        this.push(joinedFile);
+            joinedFile.contents = new Buffer(contents);
 
-        cb();
+            self.push(joinedFile);
+
+            cb();
+        });
+
     }
 
     return through.obj(bufferContents, endStream);
